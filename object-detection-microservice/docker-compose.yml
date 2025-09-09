@@ -1,0 +1,27 @@
+name: Microservices for Object Detection Application
+
+
+services:
+  ui_backend:
+    build: ./ui_backend
+    ports:
+      - "5000:5000"
+    volumes:
+      - ./ui_backend/output:/app/output
+    depends_on:
+      - ai_backend
+    networks:
+      - object-detection-network
+
+  ai_backend:
+    build: ./ai_backend
+    ports:
+      - "5001:5001"
+    networks:
+      - object-detection-network
+
+networks:
+  object-detection-network:
+    driver: bridge
+
+
